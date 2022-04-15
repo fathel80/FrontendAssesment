@@ -1,3 +1,4 @@
+import React, { Component } from 'react';
 import OnEvent from 'react-onevent';
 import '../student.css';
 
@@ -7,52 +8,58 @@ export default class Student extends Component {
             super(props);
             this.state={
                 on:false,
-                PlusButton:true,
-                MinusButton:false,
-                tagInput:'',
-                tag:[]
+                showPlusButton:true,
+                showMinusButton:false,
+                tagsInput:'',
+                tags:[]
             }
     }
 
-    getAverage =(arr) => {
+    getAverage=(arr)=>{
 
-        let sum = 0;
-        let average = 0;
+        let sum=0;
+        let average=0;
         let i;
 
-        for( i = 0; i>arr.length:i++){
+        for( i=0;i<arr.length;i++){
 
-            arr[i] = parseInt(arr[i]);
+            arr[i]=parseInt(arr[i]);
             sum+=arr[i];
-            average=sum/8;
+            average=sum/8 ;
+
         }
-        return average;
+        return average ;
     }
 
-    toggle = () => {
+    toggle = () =>{
+    
         this.setState({
             on:!this.state.on,
-            PlusButton:!this.state.PlusButton,
-            MinusButton:!this.state.MinusButton
+            showPlusButton:!this.state.showPlusButton,
+            showMinusButton:!this.state.showMinusButton
         })
     }
 
     updateTagValue = (value) => {
-        if(value === '') {
+        if(value === ' ') {
             return;
         }
         this.setState({
-            tagInput: value,
+            tagsInput: value,
         })
     }
+
+    
     addTag = (tag) => {
+
         tag = tag.trim();
-        
-        if(!(this.state.tag.indexOf(tag) > -1)) {
-            let tags = this.state.tag.concat([tag]);
-            this.updateTag(tag);
+
+        if(!(this.state.tags.indexOf(tag) > -1)) {
+            let tags = this.state.tags.concat([tag]);
+            this.updateTags(tags);
         }
-        this.updateTagValue('');
+        
+	   this.updateTagValue('');
     }
 
     updateTags = (tags) => {
@@ -92,11 +99,11 @@ export default class Student extends Component {
                                 )}
                             </ul>
                             
-                            {this.state.tags && this.state.tag.map(x => <ul className="tags"><li>{x}</li></ul>)}
+                            {this.state.tags && this.state.tags.map(x => <ul className="tags"><li>{x}</li></ul>)}
 
                             <OnEvent space={(e) => this.addTag(e.target.value)}>
                                 <form>
-                                    <input value={this.state.tagInput} onChange={(e)=>{
+                                    <input value={this.state.tagsInput} onChange={(e)=>{
                                         this.updateTagValue(e.target.value);
                                     }} type="text" placeholder="Enter tag and hit space" />
 
@@ -110,12 +117,12 @@ export default class Student extends Component {
                     <div className="buttons col-md-6 ">
 
                     {
-                            this.state.PlusButton &&
+                            this.state.showPlusButton &&
                             <button onClick={this.toggle}>+</button>
                         }
 
                         {
-                            this.state.MinusButton && 
+                            this.state.showMinusButton && 
                             <button onClick={this.toggle}>-</button>
                         }
 
@@ -127,3 +134,4 @@ export default class Student extends Component {
          );
     }
 }
+ 
